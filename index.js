@@ -59,6 +59,11 @@ async function createTable() {
  */
 async function insertMovie(title, year, genre, director) {
   // TODO: Add code to insert a new movie into the Movies table
+  await pool.query (`
+    INSERT INTO movies (title, year, genre, director) VALUES ($1, $2, $3, $4)`,
+  [title, year, genre, director]
+);
+  console.log(`Movie successfully added to the database: ${Title} Directed by: ${director}`)
 };
 
 /**
