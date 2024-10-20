@@ -4,8 +4,8 @@ const { Pool } = require('pg');
 const pool = new Pool({
   user: 'postgres', //This _should_ be your username, as it's the default one Postgres uses
   host: 'localhost',
-  database: 'your_database_name', //This should be changed to reflect your actual database
-  password: 'your_database_password', //This should be changed to reflect the password you used when setting up Postgres
+  database: 'midterm-sprint', //This should be changed to reflect your actual database
+  password: 'password', //This should be changed to reflect the password you used when setting up Postgres
   port: 5432,
 });
 
@@ -14,6 +14,14 @@ const pool = new Pool({
  */
 async function createTable() {
   // TODO: Add code to create Movies, Customers, and Rentals tables
+  await pool.query (`
+    CREATE TABLE IF NOT EXISTS Movies (
+    Movie_ID SERIAL PRIMARY KEY,
+    Title TEXT NOT NULL,
+    Year INT,
+    Genre TEXT NOT NULL,
+    Director TEXT NOT NULL
+   ) `)
 };
 
 /**
