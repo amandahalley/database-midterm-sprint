@@ -14,6 +14,8 @@ const pool = new Pool({
  */
 async function createTable() {
   // TODO: Add code to create Movies, Customers, and Rentals tables
+
+  //create movies table
   await pool.query (`
     CREATE TABLE IF NOT EXISTS Movies (
     Movie_ID SERIAL PRIMARY KEY,
@@ -22,6 +24,29 @@ async function createTable() {
     Genre TEXT NOT NULL,
     Director TEXT NOT NULL
    ) `)
+  
+  //create customers table
+  await pool.query (`
+    CREATE TABLE IF NOT EXISTS Customers (
+    Customer_ID SERIAL PRIMARY KEY,
+    FirstName TEXT NOT NULL,
+    LastName TEXT NOT NULL,
+    Email TEXT UNIQUE NOT NULL,
+    PhoneNumber VARCHAR(15)
+    )`
+  )
+
+  //create rentals table using foreign keys to link customers table and movies table
+  await pool.query (`
+    CREATE TABLE IF NOT EXISTS Rentals (
+    Rental_ID SERIAL PRIMARY KEY,
+    Customer_ID INT NOT NULL,
+    Movie_ID INT NOT NULL,
+    Rental_Date DATE NOT NULL,
+    Return_Date DATE,
+    FOREIGN KEY (Customer_ID) REFERENCES Customers(Customer_ID),
+    FOREIGN KEY (Movie_ID) REFERENCES Movies(Movie_ID)
+    )`)
 };
 
 /**
