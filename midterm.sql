@@ -60,3 +60,51 @@ INSERT INTO rentals (customer_id, movie_id, rental_date, return_date) VALUES
 (4, 2, '2024-08-02', '2024-08-08'),
 (5, 1, '2024-10-05', NULL), --not returned
 (5, 5, '2024-04-02', '2024-04-08')
+
+-- TASKS
+
+-- Find all movies rented by a specific customer, given their email.
+-- Customer: Jane Smith
+-- Movies rented: Titanic, Forest Gump
+SELECT movies.title
+FROM rentals
+JOIN customers ON rentals.customer_id = customers.customer_id
+JOIN movies ON rentals.movie_id = movies.movie_id 
+WHERE customers.email = 'jane.smith@example.com';
+
+-- List all customers who have rented a specific movie, provided the movie title.
+-- Movie rented: The Godfather
+-- Customers that rented: John Doe, Bob Brown
+SELECT customers.firstname || ' ' || customers.lastname AS full_name
+FROM rentals
+JOIN customers ON rentals.customer_id = customers.customer_id
+JOIN movies ON rentals.movie_id = movies.movie_id
+WHERE movies.title = 'The Godfather';
+
+-- Get the rental history for a specific movie title.
+-- Rental history for: Forrest Gump
+-- rented by: Jane Smith, Bob Brown, Charlie Davis
+SELECT customers.firstname || ' ' || customers.lastname AS full_name, rentals.rental_date, rentals.return_date
+FROM rentals
+JOIN customers ON rentals.customer_id = customers.customer_id
+JOIN movies ON rentals.movie_id = movies.movie_id
+WHERE movies.title = 'Forrest Gump';
+
+-- For a specific movie director: Find the name of the customer, the date of the rental, and the title of the movie for each time a movie by that director was rented.
+-- Director: Francis Ford Coppola
+-- Movie title: The Godfather
+-- Rented by; John Doe, Bob Brown
+SELECT customers.firstname || ' ' || customers.lastname AS full_name, rentals.rental_date, movies.title
+FROM rentals
+JOIN customers ON rentals.customer_id = customers.customer_id
+JOIN movies ON rentals.movie_id = movies.movie_id
+WHERE movies.director = 'Francis Ford Coppola';
+ 
+ -- List all movies that are currently rented out (i.e., who’s return dates have not yet been met).
+ -- Customers with current rentals:
+ -- Charlie David: the matrix, Bob Brown: Forrest Gump, Jane Smith Forrest Gump
+SELECT movies.title, rentals.rental_date, customers.firstname || ' ' || customers.lastname AS full_name
+FROM rentals
+JOIN customers ON rentals.customer_id = customers.customer_id
+JOIN movies ON rentals.movie_id = movies.movie_id
+WHERE rentals.return_date IS NULL;
