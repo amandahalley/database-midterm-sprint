@@ -71,6 +71,15 @@ async function insertMovie(title, year, genre, director) {
  */
 async function displayMovies() {
   // TODO: Add code to retrieve and print all movies from the Movies table
+  const response = await pool.query('SELECT * FROM movies');
+
+  console.log();
+  console.log('                      Movies')
+  console.log('--------------------------------------------------')
+
+  response.rows.forEach((row) => {
+    console.log(`${row.movie_id}: ${row.title} , Directed by: ${row.director}]`)
+  });
 };
 
 /**
