@@ -85,11 +85,14 @@ async function displayMovies() {
 /**
  * Updates a customer's email address.
  * 
- * @param {number} customerId ID of the customer
+ * @param {number} customer_id ID of the customer
  * @param {string} newEmail New email address of the customer
  */
-async function updateCustomerEmail(customerId, newEmail) {
+async function updateCustomerEmail(customer_id, newEmail) {
   // TODO: Add code to update a customer's email address
+  const query = `UPDATE customers SET email = $1 WHERE customer_id = $2`;
+   const result = await pool.query(query, [newEmail, customer_id]);
+   console.log(`Email successfully update for customer ID ${customer_id} TO ${newEmail}`, result.rowCount);
 };
 
 /**
