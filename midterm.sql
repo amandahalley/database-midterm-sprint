@@ -29,6 +29,16 @@ CREATE TABLE Rentals (
     FOREIGN KEY (Movie_ID) REFERENCES Movies(Movie_ID) -- link movies table using foreign key
     );
 
+-- NORMALIZATION
+
+-- 3NF explanation: Each table eliminates transitive dependencies
+-- Movies table: Non key attributes (Title, Year, Genre, Director) depends only on the Primary Key (Movie_ID).
+
+-- Customers table: Non key attributes (FirstName, LastName, Email, PhoneNumber) depends only on the primary key (Customer_ID)
+
+-- Rentals table: Non key attributes (Rental_Date and Return_Date) depend on the Primary Key (Rental_ID) and reference only Customer_ID and Movie_ID (Foreign keys)
+
+
 
 -- INSERT DATA INTO TABLES
 
